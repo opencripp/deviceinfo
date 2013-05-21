@@ -7,13 +7,13 @@ import android.os.Environment;
 import android.util.Log;
 
 public class DeviceInfo {
-  //all values
+	//Variables
 	String phone = Build.DEVICE;
 	String os = Build.VERSION.RELEASE;
-	String data, boot, system, storage, realname;
-	boolean support, sndinit;
+	String data, boot, system, storage, realname, osh, format;
+	boolean support, sndinit = false;
 	
-	//identify and load the values for the app
+	//This method is used to identify the device
 	public void Identify(){
 		
 		//devices are separated by maker
@@ -29,7 +29,9 @@ public class DeviceInfo {
 	    	data = "/dev/block/mmcblk0p07";
 	    	boot = "/dev/block/mmcblk0p11";
 			system = "/dev/block/mmcblk0p12";
+			osh = "here goes the webtop partition";
 			
+			format = "ext3";
 			storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 		} 
 	    else if(phone.contentEquals("edison")) //moto atrix 2
@@ -40,6 +42,8 @@ public class DeviceInfo {
 	    	data = "";
 	    	boot = "";
 			system = "/dev/block/mmcblk1p21";
+			
+			format = "ext3";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    } 
 	    else if(phone.contentEquals("dinara")) //moto atrix hd
@@ -55,7 +59,8 @@ public class DeviceInfo {
 	        else if(phone.contentEquals("smi")) //moto razr i
 	    {
 	    	realname = "RAZR i";
-	    	support = true;									
+	    	support = true;
+	    	
 	    	data = "/dev/block/mmcblk0p17";
 	    	boot = "/dev/block/mmcblk0p5";
 			system = "/dev/block/mmcblk0p16";
@@ -64,7 +69,8 @@ public class DeviceInfo {
 	        else if(phone.contentEquals("vanquish")) //moto razr hd
 	    {
 	    	realname = "Motorola RAZR HD";
-	    	support = true;									
+	    	support = true;	
+	    	
 	    	data = "/dev/block/mmcblk0p38";
 	    	boot = "/dev/block/mmcblk0p31";
 			system = "/dev/block/mmcblk0p36";
@@ -73,7 +79,8 @@ public class DeviceInfo {
 	            else if(phone.contentEquals("scorpion_mini")) //moto razr m
 	    {
 	    	realname = "Motorola RAZR M";
-	    	support = true;									
+	    	support = true;		
+	    	
 	    	data = "/dev/block/mmcblk0p38";
 	    	boot = "/dev/block/mmcblk0p31";
 			system = "/dev/block/mmcblk0p36";
@@ -83,6 +90,7 @@ public class DeviceInfo {
 	    {
 	    	realname = "Motorola RAZR";
 	    	support = true;
+	    	
 	    	data = "/dev/block/mccblk1p24";
 	    	boot = "/dev/block/mccblk1p14";
 			system = "/dev/block/mccblk1p20";
@@ -92,6 +100,7 @@ public class DeviceInfo {
 	    {
 	    	realname = "Motorola DROID 4";
 	    	support = true;
+	    	
 	    	data = "/dev/block/mccblk1p24";
 	    	boot = "/dev/block/mccblk1p14";
 			system = "/dev/block/mccblk1p20";
@@ -101,6 +110,7 @@ public class DeviceInfo {
 	    {
 	    	realname = "Motorola DROID BIONIC";
 	    	support = true;
+	    	
 	    	data = "/dev/block/mccblk1p25";
 	    	boot = "/dev/block/mccblk1p15";
 			system = "/dev/block/mccblk1p21";
@@ -110,31 +120,19 @@ public class DeviceInfo {
 	    {
 	    	realname = "Motorola Photon 4G";
 	    	support = true;
+	    	
 	    	data = "/dev/block/mmcblk0p07";
 	    	boot = "/dev/block/mmcblk0p11";
 			system = "/dev/block/mmcblk0p12";
+			osh = "here goes the webtop partition";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    } 
-	    else if(phone.contentEquals("triumph")) //moto triumph
+		//moto triumph
+	    else if(phone.contentEquals("triumph") || phone.contentEquals("WX435") || phone.contentEquals("fb0")) 
 	    {
 	    	realname = "Motorola Triumph";
 	    	support = true;
-	    	boot = "dev/block/mmcblk0p5";
-			system = "/dev/block/mmcblk0p7";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("WX435")) //moto triumph WX435
-	    {
-	    	realname = "Motorola Triumph";
-	    	support = true;
-	    	boot = "dev/block/mmcblk0p5";
-			system = "/dev/block/mmcblk0p7";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("fb0")) //moto triumph fb0
-	    {
-	    	realname = "Motorola Triumph";
-	    	support = true;
+	    	
 	    	boot = "dev/block/mmcblk0p5";
 			system = "/dev/block/mmcblk0p7";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -144,6 +142,7 @@ public class DeviceInfo {
 	    	realname = "Motorola Defy";
 	    	sndinit = true;
 	    	support = true;
+	    	
 	    	system = "/dev/block/mmcblk1p21";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    }
@@ -152,6 +151,7 @@ public class DeviceInfo {
 	    	realname = "Motorola Droid 2 Global";
 	    	sndinit = true;
 	    	support = true;
+	    	
 	    	system = "/dev/block/mmcblk1p21";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    }
@@ -160,215 +160,96 @@ public class DeviceInfo {
 	    	realname = "Motorola Droid 3";
 	    	sndinit = true;
 	    	support = true;
+	    	
 	    	boot = "Not Supported";
 	    	system = "/dev/block/mmcblk1p21";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    }
 	    // tablets
-	    else if(phone.contentEquals("wingray")) // moto xoom	
+	    else if(phone.contentEquals("wingray") || phone.contentEquals("stingray")) // moto xoom	
 	    {
 	    	realname = "Motorola Xoom";
 	    	support = true;
-	    	boot = "/dev/block/platform/sdhci-tegra.3/by-name/boot";
-	    	system = "/dev/block/platform/sdhci-tegra.3/by-name/system";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    }
-	    else if(phone.contentEquals("stingray")) // moto xoom
-	    {
-	    	realname = "Motorola Xoom";
-	    	support = true;
+	    	
 	    	boot = "/dev/block/platform/sdhci-tegra.3/by-name/boot";
 	    	system = "/dev/block/platform/sdhci-tegra.3/by-name/system";
 	    	data = "/dev/block/platform/sdhci-tegra.3/by-name/data";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    }
+
 		
 		//samsung
-	    else if(phone.contentEquals("n7000")) // note ii
+		// note ii
+	    else if(phone.contentEquals("n7000") || phone.contentEquals("N7000") || phone.contentEquals("galaxynote") || phone.contentEquals("GT-N7000")) 
 	    {
 	    	realname = "Samsung Note II";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p5";
 	    	system = "/dev/block/mmcblk0p9";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    } 
-	    else if(phone.contentEquals("N7000")) // note ii
-	    {
-	    	realname = "Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p5";
-	    	system = "/dev/block/mmcblk0p9";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    }
-	    else if(phone.contentEquals("galaxynote")) // note ii
-	    {
-	    	realname = "Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p5";
-	    	system = "/dev/block/mmcblk0p9";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    }
-	    else if(phone.contentEquals("GT-N7000")) // note ii
-	    {
-	    	realname = "Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p5";
-	    	system = "/dev/block/mmcblk0p9";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    }
-	    else if(phone.contentEquals("n7100")) // note ii intl
+		// note ii intl
+	    else if(phone.contentEquals("n7100") || phone.contentEquals("t03g") || phone.contentEquals("GT-N7100")) 
 	    {
 	    	realname = "International Samsung Note II";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p8";
 	    	system = "/dev/block/mmcblk0p13";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    } 
-	    else if(phone.contentEquals("t03g")) // note ii intl
-	    {
-	    	realname = "International Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("GT-N7100")) // note ii intl
-	    {
-	    	realname = "International Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("l900")) // sprint note ii
+		// sprint note ii
+	    else if(phone.contentEquals("l900") || phone.contentEquals("t0ltespr") || phone.contentEquals("SPH-L900")) 
 	    {
 	    	realname = "Sprint Samsung Note II";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p8";
 	    	system = "/dev/block/mmcblk0p13";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("t0ltespr")) // sprint note ii
-	    {
-	    	realname = "Sprint Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("SPH-L900")) // sprint note ii
-	    {
-	    	realname = "Sprint Samsung Note II";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("i9305")) // samsung galaxy siii gsm lte
+	    }  
+		// samsung galaxy siii gsm lte
+	    else if(phone.contentEquals("i9305") || phone.contentEquals("m3") || phone.contentEquals("m3xx") || phone.contentEquals("GT-I9305")) 
 	    {
 	    	realname = "Samsung GS3 GSM LTE";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p8";
 	    	system = "/dev/block/mmcblk0p13";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    } 
-	    else if(phone.contentEquals("m3")) // samsung galaxy siii gsm lte
-	    {
-	    	realname = "Samsung GS3 GSM LTE";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("m3xx")) // samsung galaxy siii gsm lte
-	    {
-	    	realname = "Samsung GS3 GSM LTE";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("GT-I9305")) // samsung galaxy siii gsm lte
-	    {
-	    	realname = "Samsung GS3 GSM LTE";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("i9300")) // samsung galaxy siii intl
+		// samsung galaxy siii intl
+	    else if(phone.contentEquals("i9300") || phone.contentEquals("m0") || phone.contentEquals("GT-I9300")) 
 	    {
 	    	realname = "Samsung GS3 International";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p8";
 	    	system = "/dev/block/mmcblk0p13";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    } 
-	    else if(phone.contentEquals("m0")) // samsung galaxy siii intl
-	    {
-	    	realname = "Samsung GS3 International";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("GT-I9300")) // samsung galaxy siii intl
-	    {
-	    	realname = "Samsung GS3 International";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p8";
-	    	system = "/dev/block/mmcblk0p13";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("i9103")) // samsung galaxy r
+		// samsung galaxy r
+	    else if(phone.contentEquals("i9103") || phone.contentEquals("galaxyr") || phone.contentEquals("GT-I903") || phone.contentEquals("GTI9103")) 
 	    {
 	    	realname = "Samsung Galaxy R";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p9";
 	    	system = "/dev/block/mmcblk0p2";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("galaxyr")) // samsung galaxy r
-	    {
-	    	realname = "Samsung Galaxy R";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p9";
-	    	system = "/dev/block/mmcblk0p2";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } else if(phone.contentEquals("GT-I903")) // samsung galaxy r
-	    {
-	    	realname = "Samsung Galaxy R";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p9";
-	    	system = "/dev/block/mmcblk0p2";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("GTI9103")) // samsung galaxy r
-	    {
-	    	realname = "Samsung Galaxy R";
-	    	support = true;
-	    	boot = "/dev/block/mmcblk0p9";
-	    	system = "/dev/block/mmcblk0p2";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-		
+	    }		
 		//htc
 		
 		//lg
 		
 		//sony
-	    else if(phone.contentEquals("mint")) // sony xperia t
+		// sony xperia t
+	    else if(phone.contentEquals("mint") || phone.contentEquals("LT30p")) 
 	    {
 	    	realname = "Sony Xperia T";
 	    	support = true;
-	    	boot = "/dev/block/mmcblk0p4";
-	    	system = "/dev/block/mmcblk0p12";
-	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
-	    } 
-	    else if(phone.contentEquals("LT30p")) // sony xperia t
-	    {
-	    	realname = "Sony Xperia T";
-	    	support = true;
+	    	
 	    	boot = "/dev/block/mmcblk0p4";
 	    	system = "/dev/block/mmcblk0p12";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -380,6 +261,7 @@ public class DeviceInfo {
 	    {
 	    	realname = "GSM Galaxy Nexus";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/platform/omap/omap_hsmmc.0/by-name/boot";
 	    	system = "/dev/block/platform/omap/omap_hsmmc.0/by-name/system";
 	    	data = "/dev/block/platform/omap/omap_hsmmc.0/by-name/userdata";
@@ -389,6 +271,7 @@ public class DeviceInfo {
 	    {
 	    	realname = "LG Nexus 4";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/platform/msm_sdcc.1/by-name/boot";
 	    	system = "/dev/block/platform/msm_sdcc.1/by-name/system";
 	    	data = "/dev/block/platform/msm_sdcc.1/by-name/data";
@@ -398,6 +281,7 @@ public class DeviceInfo {
 	    {
 	    	realname = "ATT Asus Nexus 7";
 	    	support = true;
+	    	
 	    	boot = "/dev/block/platform/sdhci-tegra.3/by-name/LNX";;
 	    	system = "/dev/block/platform/sdhci-tegra.3/by-name/APP";
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -413,10 +297,10 @@ public class DeviceInfo {
 		Log.v("devinfo", "Device: " + phone + ", Support:" + support);
 	}
 	
-	//return strings device values on a simple string array. 
+	//Returns values about the device. IE: boot partition, device name, device storage.
 	public  String[] getInfo(){
 	
-		String[] arr = new String[7];
+		String[] arr = new String[8];
 		arr[0] = phone;
 		arr[1] = os;
 		arr[2] = boot;
@@ -424,14 +308,26 @@ public class DeviceInfo {
 		arr[4] = data;
 		arr[5] = storage;
 		arr[6] = realname;
+		arr[7] = osh;
 		
 		Log.v("devinfo", "Returning Info array");
 		
 		return arr;
 		
 	}
+	//Returns values about the format use for storage. IE: ext3, ext4 
+	public  String[] getFormat(){
 	
-	//return boolean device values on a simple boolean array
+		String[] arr1 = new String[1];
+		arr1[0] = format;
+
+		Log.v("devinfo", "Returning Format array");
+		
+		return arr1;
+		
+	}
+	
+	//Return values about support. IE: the app functions with the device, the device may be a 2nd init device
 	public boolean[] getSupport(){
 		
 		boolean[] supp = new boolean[2];
