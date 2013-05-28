@@ -54,6 +54,18 @@ public class DeviceInfo {
 	    	support = true; 	
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
 	    }
+	    else if(phone.contentEquals("ouya_1_1")) // OUYA
+	    {
+	    	realname = "OUYA";
+	    	
+	    	boot = "/dev/block/platform/sdhci-tegra.3/by-name/LNX";;
+	    	system = "/dev/block/platform/sdhci-tegra.3/by-name/APP";
+	    	data = "/dev/block/platform/sdhci-tegra.3/by-name/UDA";
+	    	format = "ext4";
+	    	
+	    	support = true; 	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
+	    }
 		//How to add a device
 		//Simply cut and paste this and only add the variables required.
 		//
@@ -73,8 +85,46 @@ public class DeviceInfo {
 		//
 		//Devices are divided by maker and device type.
 		//
-		//Nexus
-		//
+		//Amazon
+		//tablets
+	    else if (phone.contentEquals("otter") || phone.contentEquals("blaze")) // Kindle Fire
+	    {
+	    	realname = "Amazon Kindle Fire 1stGen";
+	    	
+	    	boot = "/dev/block/mmcblk0p7";
+	    	system = "/dev/block/mmcblk0p9";
+	    	format = "ext3";
+	    	
+	    	support = true;   	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
+	    }
+		//Acer
+		//tablets
+	    else if (phone.contentEquals("picasso_mf") || phone.contentEquals("a700_emea_cus1")) // Iconia Tab
+	    {
+	    	realname = "Acer Iconia Tab";
+	    	
+	    	boot = "/dev/block/platform/sdhci-tegra.3/by-name/LNX";
+	    	system = "/dev/block/platform/sdhci-tegra.3/by-name/APP";
+	    	data = "/dev/block/platform/sdhci-tegra.3/by-name/USD";
+	    	format = "ext4";
+	    	
+	    	support = true;   	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
+	    }
+		//Barnes and Nobles
+		//tablets
+	    else if (phone.contentEquals("acclaim")) // Nook Tablet
+	    {
+	    	realname = "B&N Nook Tablet";
+	    	
+	    	boot = "/dev/block/mmcblk0p4";
+	    	system = "/dev/block/mmcblk0p8";
+	    	format = "ext4";
+	    	
+	    	support = true;   	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath();
+	    }
 		//Motorola
 		//phones
 	    else if (phone.contentEquals("edison")) // Atrix 2
@@ -269,13 +319,128 @@ public class DeviceInfo {
 	    	support = true;  	    	
 	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
 	    }		
+		//Nexus
+		//
 		//LG
 		//
+	    else if (phone.contentEquals("p925")) // Thrill 4G
+	    {
+	    	realname = "LG Thrill 4G";
+	    	
+	    	boot = "/dev/block/mmcblk0p5";
+	    	system = "/dev/block/mmcblk0p7";
+	    	format = "ext4";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("p999")) // T-Mobile G2x
+	    {
+	    	realname = "T-Mobile G2x";
+	    	
+	    	boot = "/dev/block/mmcblk0p5";
+	    	system = "/dev/block/mmcblk0p1";
+	    	format = "ext3";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("c800") || phone.contentEquals("lgc800")) // T-Mobile MyTouch Q
+	    {
+	    	realname = "T-Mobile MyTouch Q";
+	    	
+	    	boot = "/dev/block/mmcblk0p7";
+	    	system = "/dev/block/mmcblk0p15";
+	    	format = "ext3";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("e739")) // myTouch
+	    {
+	    	realname = "T-Mobile myTouch";
+	    	
+	    	boot = "/dev/block/mmcblk0p7";
+	    	system = "/dev/block/mmcblk0p15";
+	    	format = "ext3";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("e730")) // Optimus Sol
+	    {
+	    	realname = "LG Optimus Sol";
+	    	
+	    	boot = "/dev/block/mmcblk0p7";
+	    	system = "/dev/block/mmcblk0p15";
+	    	format = "ext3";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("e400")) // Optimus L3
+	    {
+	    	realname = "LG Optimus L3";
+	    	
+	    	boot = "/dev/block/mmcblk0p9";
+	    	system = "/dev/block/mmcblk0p14";
+	    	format = "ext4";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+		
 		//Sony
 		//
+	    else if (phone.contentEquals("aoba") || phone.contentEquals("LT28h")) // Xperia ION
+	    {
+	    	realname = "Sony Xperia ION";
+	    	
+	    	boot = "/dev/block/mmcblk0p3";
+	    	system = "/dev/block/mmcblk0p15";
+	    	format = "ext4";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("hikari") || phone.contentEquals("LT26w")) // Xperia arco S
+	    {
+	    	realname = "Sony Xperia arco S";
+	    	
+	    	boot = "/dev/block/mmcblk0p3";
+	    	system = "/dev/block/mmcblk0p12";
+	    	format = "ext4";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("nozomi") || phone.contentEquals("LT26i")) // Xperia S
+	    {
+	    	realname = "Sony Xperia S";
+	    	
+	    	boot = "/dev/block/mmcblk0p3";
+	    	system = "/dev/block/mmcblk0p12";
+	    	format = "ext4";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
+	    else if (phone.contentEquals("hayabusa") || phone.contentEquals("LT29i")) // Xperia TX
+	    {
+	    	realname = "Sony Xperia TX";
+	    	
+	    	boot = "/dev/block/mmcblk0p4";
+	    	system = "/dev/block/mmcblk0p12";
+	    	format = "ext4";
+	    	
+	    	support = true;  	    	
+	    	storage = Environment.getExternalStorageDirectory().getAbsolutePath(); 
+	    }	
 		//Samsung
 		//
 		//OPPO
+		//
+		//OUYA
 		//
 	    else
 	    	{
